@@ -1,0 +1,3 @@
+[submodule "ls-iq"]
+	path = ls-iq
+	url = https://github.com/robfiras/ls-iq.git

@@ -1,0 +1,34 @@
+# --- 核心框架 (自动处理依赖) ---
+torch==2.4.1
+numpy==1.24.4
+pandas==2.0.3
+scipy==1.10.1
+matplotlib==3.7.5
+seaborn==0.13.2
+
+# --- 强化学习与仿真 ---
+mujoco==2.3.7
+gymnasium==0.29.1
+mushroom-rl==1.10.1
+stable_baselines3==2.4.1
+dm-control==1.0.14
+pink-noise-rl==2.0.1
+
+# --- 工具与可视化 ---
+tqdm==4.67.1
+wandb==0.23.1
+opencv-python
+pygame==2.6.1
+PyYAML==6.0.3
+click==8.1.8
+rich==14.2.0
+
+# --- 开发环境 ---
+ipykernel
+pytest==8.3.5
+
+# --- 你的自定义 Git 仓库 (必须保留) ---
+git+https://git.ias.informatik.tu-darmstadt.de/common/experiment_launcher.git@c2b523691dc0ea2042cb1bad9626c323800aab88#egg=experiment_launcher
+git+https://github.com/robfiras/ls-iq.git@b097abd97f5e51c16d583bc9805cb40fb8e2ac01#egg=imitation_lib
+git+https://github.com/robfiras/loco-mujoco.git@fb642e5918e3edd9c22a77045f25278bef3c80c6#egg=loco_mujoco
+git+https://github.com/henriTUD/musculoco_learning.git@04254425dd77681c5808fcb8dc05824b44872ca8#egg=musculoco_il

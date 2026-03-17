@@ -1,0 +1,43 @@
+[project]
+name = "musculoco_il"
+version = "0.1.0"
+description = "Imitation Learning for Musculoskeltal Control of Huamnoid Locomotion"
+readme = "README.md"
+requires-python = "==3.8.*"
+dependencies = [
+    "click==8.1.8",
+    "dm-control==1.0.14",
+    "experiment-launcher",
+    "gymnasium==0.29.1",
+    "imitation-lib",
+    "ipykernel>=6.29.5",
+    "loco-mujoco",
+    "matplotlib==3.7.5",
+    "mujoco==2.3.7",
+    "musculoco-il",
+    "mushroom-rl==1.10.1",
+    "numpy==1.24.4",
+    "opencv-python>=4.8.1.78",
+    "pandas==2.0.3",
+    "pink-noise-rl==2.0.1",
+    "protobuf~=3.20.0",
+    "pygame==2.6.1",
+    "pytest==8.3.5",
+    "pyyaml==6.0.3",
+    "rich==14.2.0",
+    "scipy==1.10.1",
+    "seaborn==0.13.2",
+    "stable-baselines3==2.4.1",
+    "torch==2.4.1",
+    "tqdm==4.67.1",
+    "wandb==0.23.1",
+]
+
+[tool.uv.sources]
+experiment-launcher = { git = "https://git.ias.informatik.tu-darmstadt.de/common/experiment_launcher.git", rev = "c2b523691dc0ea2042cb1bad9626c323800aab88" }
+imitation-lib = { path = "./ls-iq" }
+loco-mujoco = { git = "https://github.com/robfiras/loco-mujoco.git", rev = "fb642e5918e3edd9c22a77045f25278bef3c80c6" }
+musculoco-il = { path = "." }
+
+[tool.uv.workspace]
+members = []
