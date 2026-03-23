@@ -1,5 +1,6 @@
 
 from itertools import product
+from datetime import datetime
 from experiment_launcher import Launcher, is_local
 
 
@@ -16,7 +17,9 @@ if __name__ == '__main__':
     else:
         n_steps_per_epoch = 100000
 
-    launcher = Launcher(exp_name='14_AMP_latent_walk',
+    date_tag = datetime.now().strftime('%Y-%m-%d')
+
+    launcher = Launcher(exp_name=f'15_AMP_attention_walk_{date_tag}',
                         exp_file='experiment',
                         n_seeds=N_SEEDS,
                         n_cores=1,
@@ -25,12 +28,13 @@ if __name__ == '__main__':
                         hours=0,
                         minutes=0,
                         seconds=0,
-                        use_timestamp=True,
+                        use_timestamp=False,
+                        base_dir='./experiments/15_AMP_attention/logs',
                         project_name='PROJECT_NAME',
                         partition='PARTITION'
                         )
 
-    default_params = dict(n_epochs=250,
+    default_params = dict(n_epochs=2500,
                           n_steps_per_epoch=n_steps_per_epoch,
                           n_epochs_save=20,
                           n_eval_episodes=30,
@@ -38,7 +42,7 @@ if __name__ == '__main__':
                           use_cuda=USE_CUDA,
                           )
 
-    lrs = [(5e-5, 1e-5)]
+    lrs = [(5e-5, 5e-6)]
     std_0s = [0.8]
     ctrl_freqs = [50]
     max_kls = [2e-2]
@@ -55,36 +59,40 @@ if __name__ == '__main__':
                                                                 ent_coeffs, grfs, envs, x_stds):
 
         if r_t == 'target_velocity':
-            env_r_frac = 0.3
+            env_r_frac = 0.4
         else:
-            env_r_frac = 0.3
+            env_r_frac = 0.4
 
         lrc, lrD = lr
 
-        launcher.add_experiment(lrc__=lrc,
-                                lrD__=lrD,
-                                train_D_n_th_epoch__=1,
-                                std_0__=std_0,
-                                max_kl__=max_kl,
-                                ctrl_freq__=ctrl_hz,
-                                reward_type__=r_t,
-                                env_reward_frac__=env_r_frac,
-                                env_reward_func_type__='squared',
-                                env_reward_scale__=0.05,
+        launcher.add_experiment(lrc=lrc,
+                    lrD=lrD,
+                    train_D_n_th_epoch=3,
+                    std_0=std_0,
+                    max_kl=max_kl,
+                    ctrl_freq=ctrl_hz,
+                    reward_type=r_t,
+                    env_reward_frac=env_r_frac,
+                    env_reward_func_type='squared',
+                    env_reward_scale=0.05,
                                 standardize_obs=True,
-                                policy_entr_coef__=ent_c,
-                                d_entr_coef__=0.0,
-                                use_noisy_targets__=False,
-                                use_next_states__=True,
-                                amp_gp_weight__=10.0,
-                                amp_logit_reg__=0.01,
-                                amp_replay_size__=200000,
-                                amp_replay_keep_prob__=0.05,
-                                env_id__=env,
-                                learn_latent_layer__=False,
-                                std_x_0__=std_x,
-                                freeze_foot_muscles__=False,
-                                frozen_action_value__=0.0,
+                    policy_entr_coef=ent_c,
+                    d_entr_coef=0.0,
+                    use_noisy_targets=False,
+                    use_next_states=True,
+                    amp_gp_weight=5.0,
+                    amp_logit_reg=0.01,
+                    amp_replay_size=200000,
+                    amp_replay_keep_prob=0.05,
+                    env_id=env,
+                    learn_latent_layer=False,
+                    use_attention_synergy=True,
+                    n_synergies=30,
+                    synergy_attn_dim=32,
+                    synergy_temperature=1.3,
+                    std_x_0=std_x,
+                    freeze_foot_muscles=False,
+                    frozen_action_value=0.0,
                                 **default_params)
 
     launcher.run(LOCAL, TEST)
